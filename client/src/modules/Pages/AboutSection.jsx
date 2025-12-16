@@ -47,8 +47,21 @@ const AboutSection = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
+  // --- Data for Logos ---
+  const logos = [
+    { icon: <ShieldCheck className="w-8 h-8 text-white" />, text: "Security" },
+    { icon: <Globe className="w-8 h-8 text-white" />, text: "Global" },
+    { icon: <Award className="w-8 h-8 text-white" />, text: "Awarded" },
+    { icon: <BookOpen className="w-8 h-8 text-white" />, text: "Library" },
+    { icon: <Briefcase className="w-8 h-8 text-white" />, text: "Partners" },
+    { icon: <GraduationCap className="w-8 h-8 text-white" />, text: "Alumni" },
+  ];
+
+  // Duplicate the logos array to create a seamless loop effect
+  const duplicatedLogos = [...logos, ...logos];
+
   return (
-    <section className="relative w-full bg-white pt-20 pb-0 overflow-hidden">
+    <section className="relative w-full bg-white pt-20 pb-0 overflow-hidden" id="about">
       {/* --- Part 1: Main Content --- */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
         
@@ -145,8 +158,6 @@ const AboutSection = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
         className="w-full h-full relative overflow-hidden" 
-        // Note: Added explicit height h-[500px] or keep h-full if parent controls it, 
-        // usually explicit height is safer for banners between sections
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10"></div>
         <img 
@@ -157,56 +168,50 @@ const AboutSection = () => {
       </motion.div>
 
       {/* --- Part 3: Trusted By Section (Dark Blue Bottom) --- */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="bg-[#0B1C3E] py-16" // Dark Navy Blue Background
+      <div
+        className="bg-[#0B1C3E] py-16"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
           {/* Text Row */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12 border-b border-gray-700/50 pb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white max-w-lg leading-tight">
-              Trusted by 100K+ <br className="hidden md:block"/>
+              Trusted by <Counter value={100} suffix="K+" /> <br className="hidden md:block"/>
               Educational Institutions
             </h2>
             <p className="text-gray-400 text-base md:text-lg max-w-xl leading-relaxed">
               We partner with prestigious universities and schools worldwide to ensure
-              our students get the best possible guidance and opportunities for their future careers.
+              our students get the best possible guidance.
             </p>
           </div>
 
-          {/* Logos Row (Simulated with Icons/Text) */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 items-center justify-items-center opacity-80">
-            {/* Logo 1 */}
-            <div className="flex items-center gap-2 group cursor-pointer hover:opacity-100 transition-opacity">
-              <ShieldCheck className="w-8 h-8 text-white" />
-              <span className="text-white font-bold text-xl tracking-tight">Logoipsum</span>
-            </div>
-            {/* Logo 2 */}
-            <div className="flex items-center gap-2 group cursor-pointer hover:opacity-100 transition-opacity">
-              <Globe className="w-8 h-8 text-white" />
-              <span className="text-white font-bold text-xl tracking-tight">Logoipsum</span>
-            </div>
-             {/* Logo 3 */}
-             <div className="flex items-center gap-2 group cursor-pointer hover:opacity-100 transition-opacity">
-              <Award className="w-8 h-8 text-white" />
-              <span className="text-white font-bold text-xl tracking-tight">IPSUM</span>
-            </div>
-             {/* Logo 4 */}
-             <div className="flex items-center gap-2 group cursor-pointer hover:opacity-100 transition-opacity">
-              <BookOpen className="w-8 h-8 text-white" />
-              <span className="text-white font-bold text-xl tracking-tight">Logoipsum</span>
-            </div>
-             {/* Logo 5 */}
-             <div className="flex items-center gap-2 group cursor-pointer hover:opacity-100 transition-opacity">
-              <Briefcase className="w-8 h-8 text-white" />
-              <span className="text-white font-bold text-xl tracking-tight">logoipsum</span>
-            </div>
+          {/* Logos Row - Moving Slide Animation */}
+          {/* Mask container to fade edges */}
+          <div className="flex relative w-full overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
+            <motion.div 
+              className="flex gap-16 items-center flex-nowrap min-w-max"
+              animate={{ x: "-50%" }}
+              transition={{
+                duration: 20, 
+                ease: "linear",
+                repeat: Infinity,
+              }}
+            >
+              {duplicatedLogos.map((logo, index) => (
+                <div 
+                  key={index} 
+                  className="flex items-center gap-3 group cursor-pointer hover:opacity-100 transition-opacity opacity-70"
+                >
+                  {React.cloneElement(logo.icon, { className: "w-10 h-10 text-white" })}
+                  <span className="text-white font-bold text-xl tracking-tight uppercase">
+                    {logo.text}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
           </div>
+          
         </div>
-      </motion.div>
+      </div>
 
     </section>
   );

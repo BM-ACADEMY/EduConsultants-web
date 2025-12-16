@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
-import { 
-  MapPin, 
-  Mail, 
-  Phone, 
-  Menu, 
-  X, 
-} from "lucide-react";
-// Ensure you have your logo path correct
-import Logo from "@/assets/logo/logo.png"; 
+import React, { useState, useRef } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useMotionValueEvent,
+} from "framer-motion";
+import { MapPin, Mail, Phone, Menu, X } from "lucide-react";
+import Logo from "@/assets/logo/logo.png";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
+  const isClickScrolling = useRef(false);
 
-  // Use Framer Motion hook to detect scroll position smoothly
   useMotionValueEvent(scrollY, "change", (latest) => {
+    if (isClickScrolling.current) return;
+
     if (latest > 50 && !isScrolled) {
       setIsScrolled(true);
     } else if (latest <= 50 && isScrolled) {
@@ -24,15 +24,48 @@ const Header = () => {
     }
   });
 
-  // Navigation Data
+  const handleScroll = (e, href) => {
+    e.preventDefault();
+    window.history.pushState(null, "", href);
+    setIsMobileMenuOpen(false);
+
+    const targetId = href.replace("#", "");
+    isClickScrolling.current = true;
+
+    const isGoingToTop = targetId === "home";
+    setIsScrolled(!isGoingToTop);
+
+    setTimeout(() => {
+      const elem = document.getElementById(targetId);
+
+      if (elem) {
+        const headerOffset = isGoingToTop ? 120 : 90;
+        const elementPosition = elem.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      } else if (href === "#" || isGoingToTop) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      setTimeout(() => {
+        isClickScrolling.current = false;
+      }, 1000);
+
+    }, 50);
+  };
+
   const navLinks = [
-    { name: "HOME", href: "#", active: true },
-    { name: "ABOUT", href: "#" },
-    { name: "ACADEMICS", href: "#" },
-    { name: "FACULTIES", href: "#" },
-    { name: "CAMPUS LIFE", href: "#" },
-    { name: "BLOG", href: "#" },
-    { name: "PAGES", href: "#" },
+    { name: "HOME", href: "#home", active: true },
+    { name: "ABOUT", href: "#about" },
+    { name: "WHY CHOOSE", href: "#whychoose" },
+    { name: "WEBINARS", href: "#webinars" },
+    { name: "OUR PROCESS", href: "#ourprocess" },
+    { name: "TESTIMONIAL", href: "#testimonial" },
+    { name: "FAQ", href: "#faq" },
   ];
 
   return (
@@ -40,113 +73,123 @@ const Header = () => {
       <motion.header
         className="fixed top-0 left-0 w-full z-50 bg-white font-sans"
         initial={{ y: 0 }}
-        animate={{ 
-          boxShadow: isScrolled ? "0px 4px 20px rgba(0,0,0,0.05)" : "none" 
+        animate={{
+          boxShadow: isScrolled ? "0px 4px 20px rgba(0,0,0,0.05)" : "none",
         }}
         transition={{ duration: 0.3 }}
       >
-        {/* ================= TOP BAR (Desktop Only - Collapsible) ================= */}
-        <motion.div 
+        <motion.div
           className="hidden lg:block bg-white overflow-hidden border-b border-gray-100"
           initial={{ height: "auto", opacity: 1 }}
-          animate={{ 
-            height: isScrolled ? 0 : "auto", 
-            opacity: isScrolled ? 0 : 1 
+          animate={{
+            height: isScrolled ? 0 : "auto",
+            opacity: isScrolled ? 0 : 1,
+            marginBottom: isScrolled ? 0 : 0
           }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
         >
           <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-            {/* Logo Section */}
-            <div className="flex items-center gap-3">
-              <img 
-                src={Logo} 
-                alt="Universite Logo" 
-                className="h-12 w-auto object-contain" 
+            <a 
+              href="#home" 
+              onClick={(e) => handleScroll(e, "#home")}
+              className="flex items-center gap-3"
+            >
+              <img
+                src={Logo}
+                alt="Universite Logo"
+                className="h-12 w-auto object-contain"
               />
-            </div>
+            </a>
 
-            {/* Contact Info Section */}
             <div className="flex items-center gap-8">
-              <ContactItem icon={MapPin} label="Address" value="2155 Palmer Ave, New York" />
-              <ContactItem icon={Mail} label="Email" value="hello@univer-site.edu" />
-              <ContactItem icon={Phone} label="Phone Number" value="(217) 555-0113" />
+              <ContactItem icon={MapPin} label="Address" value="252, 2nd Floor, M G Road, Kottakuppam, Vanur, Tamil Nadu 605104" />
+              <ContactItem icon={Mail} label="Email" value="educonsultants1994@gmail.com" />
+              <ContactItem icon={Phone} label="Phone Number" value="8015359971" />
             </div>
           </div>
         </motion.div>
 
-        {/* ================= MAIN NAVBAR ================= */}
         <motion.nav
           className="bg-white"
-          animate={{ 
-            paddingBlock: isScrolled ? "10px" : "16px" 
+          animate={{
+            paddingBlock: isScrolled ? "10px" : "16px",
           }}
           transition={{ duration: 0.3 }}
         >
           <div className="container mx-auto px-4">
             
-            {/* ================= MOBILE/TABLET LAYOUT ================= */}
             <div className="lg:hidden flex flex-col gap-4">
-              {/* This logo only appears when Top Bar is hidden (on mobile it's always "hidden" effectively by layout) 
-                  or we can keep it static. For this design, let's keep the stacked look. */}
-               <div className="flex items-center gap-2 pt-2">
-                 <img src={Logo} alt="Universite Logo" className="h-10 w-auto object-contain" />
-               </div>
+              <div className="flex items-center gap-2 pt-2">
+                <a href="#home" onClick={(e) => handleScroll(e, "#home")}>
+                  <img src={Logo} alt="Universite Logo" className="h-10 w-auto object-contain" />
+                </a>
+              </div>
 
-               <div className="flex justify-between items-center border-t border-gray-100 pt-3 pb-2">
-                 <button
-                   onClick={() => setIsMobileMenuOpen(true)}
-                   className="bg-[#C61A1A] hover:bg-[#a51515] text-white h-10 w-10 flex items-center justify-center transition-colors"
-                 >
-                   <Menu size={20} />
-                 </button>
-                 <button className="bg-[#C61A1A] hover:bg-[#a51515] text-white px-5 h-10 font-bold text-xs uppercase tracking-wide transition-colors flex items-center">
-                   Contact Us
-                 </button>
-               </div>
+              <div className="flex justify-between items-center border-t border-gray-100 pt-3 pb-2">
+                <button
+                  onClick={() => setIsMobileMenuOpen(true)}
+                  className="bg-[#C61A1A] hover:bg-[#a51515] text-white h-10 w-10 flex items-center justify-center transition-colors"
+                >
+                  <Menu size={20} />
+                </button>
+                <a 
+                  href="#contact" 
+                  onClick={(e) => handleScroll(e, "#contact")}
+                  className="bg-[#C61A1A] hover:bg-[#a51515] text-white px-5 h-10 font-bold text-xs uppercase tracking-wide transition-colors flex items-center"
+                >
+                  Contact Us
+                </a>
+              </div>
             </div>
 
-            {/* ================= DESKTOP LAYOUT ================= */}
             <div className="hidden lg:flex justify-between items-center">
-              {/* Navigation Links */}
               <div className="flex items-center gap-8">
-                {/* We add a Mini Logo that fades in when scrolled, so branding is never lost */}
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, width: 0 }}
-                  animate={{ 
+                  animate={{
                     opacity: isScrolled ? 1 : 0,
                     width: isScrolled ? "auto" : 0,
-                    paddingRight: isScrolled ? 20 : 0
+                    paddingRight: isScrolled ? 20 : 0,
                   }}
                   className="overflow-hidden flex items-center gap-2"
                 >
+                  <a href="#home" onClick={(e) => handleScroll(e, "#home")}>
                     <img src={Logo} alt="Logo" className="h-8 w-auto" />
+                  </a>
                 </motion.div>
 
                 {navLinks.map((link, index) => (
                   <a
                     key={index}
                     href={link.href}
-                    className={`relative group flex items-center gap-1 text-sm font-bold transition-colors duration-200 ${
-                      link.active ? "text-[#C61A1A]" : "text-gray-600 hover:text-[#C61A1A]"
+                    onClick={(e) => handleScroll(e, link.href)}
+                    className={`relative group flex items-center gap-1 text-sm font-medium transition-colors duration-200 ${
+                      link.active
+                        ? "text-[#C61A1A]"
+                        : "text-gray-600 hover:text-[#C61A1A]"
                     }`}
                   >
                     {link.name}
-                    {/* Hover Underline Animation */}
-                    <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#C61A1A] transition-all duration-300 ${link.active ? "w-full" : "w-0 group-hover:w-full"}`}></span>
+                    <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#C61A1A] transition-all duration-300 ${
+                        link.active ? "w-full" : "w-0 group-hover:w-full"
+                      }`}
+                    ></span>
                   </a>
                 ))}
               </div>
 
-              {/* CTA Button */}
-              <button className="bg-[#C61A1A] hover:bg-[#a51515] text-white px-6 py-3 font-bold text-sm uppercase tracking-wide transition-colors-sm shadow-md hover:shadow-lg">
+              <a 
+                href="#contact"
+                onClick={(e) => handleScroll(e, "#contact")}
+                className="bg-[#C61A1A] hover:bg-[#a51515] text-white px-6 py-3 font-bold text-sm uppercase tracking-wide transition-colors shadow-md hover:shadow-lg"
+              >
                 Contact Us
-              </button>
+              </a>
             </div>
           </div>
         </motion.nav>
       </motion.header>
 
-      {/* ================= MOBILE OFFCANVAS ================= */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -168,7 +211,7 @@ const Header = () => {
                 <span className="text-xl font-bold text-gray-900">Menu</span>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 hover:bg-white bg-gray-200-full text-[#C61A1A] transition-colors"
+                  className="p-2 hover:bg-white bg-gray-200 rounded-full text-[#C61A1A] transition-colors"
                 >
                   <X size={20} />
                 </button>
@@ -179,19 +222,21 @@ const Header = () => {
                   <a
                     key={index}
                     href={link.href}
-                    className={`text-lg font-medium px-4 py-3-lg transition-colors ${
-                      link.active 
-                      ? "bg-red-50 text-[#C61A1A]" 
-                      : "text-gray-700 hover:bg-gray-50"
+                    onClick={(e) => handleScroll(e, link.href)}
+                    className={`text-lg font-medium px-4 py-3 rounded-lg transition-colors ${
+                      link.active
+                        ? "bg-red-50 text-[#C61A1A]"
+                        : "text-gray-700 hover:bg-gray-50"
                     }`}
                   >
                     {link.name}
                   </a>
                 ))}
-
+                
                 <div className="mt-8 border-t pt-6 flex flex-col gap-4">
-                   <ContactItem icon={MapPin} label="Address" value="2155 Palmer Ave, NY" mobile />
-                   <ContactItem icon={Phone} label="Phone" value="(217) 555-0113" mobile />
+                  <ContactItem icon={MapPin} label="Address" value="252, 2nd Floor, M G Road, Kottakuppam, Vanur, Tamil Nadu 605104" mobile={true} />
+                  <ContactItem icon={Mail} label="Email" value="educonsultants1994@gmail.com" mobile={true} />
+                  <ContactItem icon={Phone} label="Phone Number" value="8015359971" mobile={true} />
                 </div>
               </div>
             </motion.div>
@@ -199,17 +244,11 @@ const Header = () => {
         )}
       </AnimatePresence>
 
-      {/* SPACER: 
-        Since the header is fixed, we need to push the content down 
-        so it doesn't hide behind the header initially. 
-        Adjust height (h-[140px]) based on your actual initial header height.
-      */}
       <div className="h-[140px] lg:h-[120px]" />
     </>
   );
 };
 
-// Helper Component for cleaner code
 const ContactItem = ({ icon: Icon, label, value, mobile }) => (
   <div className={`flex items-center gap-3 ${mobile ? "text-gray-600" : ""}`}>
     <div className={`p-2 text-white ${mobile ? "bg-gray-100 text-[#0077C0]" : "bg-[#0077C0]"}`}>
