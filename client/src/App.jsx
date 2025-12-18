@@ -18,15 +18,15 @@ const App = () => {
     <div>
       <Header/>
       <Homepage/>
-      <AboutSection/>
       <ChooseUsSection/>
       <UpcomingWebinars/>
       <WhatWeHelpWith/>
       <TrendingSection/>
       <ProcessSection/>
-      <TestimonialSection/>
       <PopularPrograms/>
       <FAQSection/>
+      <AboutSection/>
+      <TestimonialSection/>
       <WhatsAppBtn/>
       <Footer/>
     </div>

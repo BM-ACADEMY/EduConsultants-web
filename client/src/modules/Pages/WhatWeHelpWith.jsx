@@ -27,7 +27,7 @@ const WhatWeHelpWith = () => {
     },
     {
       id: 3,
-      title: "Documents List & Preparation",
+      title: "Documents Checklist",
       description: "Includes NEET-related docs, France Campus France SOP, etc.",
     },
     {

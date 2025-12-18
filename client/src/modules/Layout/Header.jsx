@@ -41,7 +41,8 @@ const Header = () => {
       if (elem) {
         const headerOffset = isGoingToTop ? 120 : 90;
         const elementPosition = elem.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        const offsetPosition =
+          elementPosition + window.pageYOffset - headerOffset;
 
         window.scrollTo({
           top: offsetPosition,
@@ -54,7 +55,6 @@ const Header = () => {
       setTimeout(() => {
         isClickScrolling.current = false;
       }, 1000);
-
     }, 50);
   };
 
@@ -66,6 +66,28 @@ const Header = () => {
     { name: "OUR PROCESS", href: "#ourprocess" },
     { name: "TESTIMONIAL", href: "#testimonial" },
     { name: "FAQ", href: "#faq" },
+  ];
+
+  // Define contact info here to reuse in mobile and desktop
+  const contactInfo = [
+    {
+      icon: MapPin,
+      label: "Location",
+      value: "Puducherry",
+      href: "https://maps.app.goo.gl/deu3f4ntDPYwjkJM6", // Map Link
+    },
+    {
+      icon: Mail,
+      label: "Email",
+      value: "admin@abmgroups.org",
+      href: "mailto:admin@abmgroups.org", // Email Action
+    },
+    {
+      icon: Phone,
+      label: "Call Us",
+      value: "8015359971",
+      href: "tel:8015359971", // Call Action
+    },
   ];
 
   return (
@@ -84,13 +106,13 @@ const Header = () => {
           animate={{
             height: isScrolled ? 0 : "auto",
             opacity: isScrolled ? 0 : 1,
-            marginBottom: isScrolled ? 0 : 0
+            marginBottom: isScrolled ? 0 : 0,
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
           <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a 
-              href="#home" 
+            <a
+              href="#home"
               onClick={(e) => handleScroll(e, "#home")}
               className="flex items-center gap-3"
             >
@@ -102,9 +124,9 @@ const Header = () => {
             </a>
 
             <div className="flex items-center gap-8">
-              <ContactItem icon={MapPin} label="Address" value="252, 2nd Floor, M G Road, Kottakuppam, Vanur, Tamil Nadu 605104" />
-              <ContactItem icon={Mail} label="Email" value="educonsultants1994@gmail.com" />
-              <ContactItem icon={Phone} label="Phone Number" value="8015359971" />
+              {contactInfo.map((info, idx) => (
+                <ContactItem key={idx} {...info} />
+              ))}
             </div>
           </div>
         </motion.div>
@@ -117,11 +139,14 @@ const Header = () => {
           transition={{ duration: 0.3 }}
         >
           <div className="container mx-auto px-4">
-            
             <div className="lg:hidden flex flex-col gap-4">
               <div className="flex items-center gap-2 pt-2">
                 <a href="#home" onClick={(e) => handleScroll(e, "#home")}>
-                  <img src={Logo} alt="Universite Logo" className="h-10 w-auto object-contain" />
+                  <img
+                    src={Logo}
+                    alt="Universite Logo"
+                    className="h-10 w-auto object-contain"
+                  />
                 </a>
               </div>
 
@@ -132,9 +157,8 @@ const Header = () => {
                 >
                   <Menu size={20} />
                 </button>
-                <a 
-                  href="#contact" 
-                  onClick={(e) => handleScroll(e, "#contact")}
+                <a
+                  href="https://docs.google.com/forms/d/1_IfXhH2B5eA0NyE4MNl1hbsme-hyZS7NnGkwiWNr_Vc/viewform?edit_requested=true" target="_blank"
                   className="bg-[#C61A1A] hover:bg-[#a51515] text-white px-5 h-10 font-bold text-xs uppercase tracking-wide transition-colors flex items-center"
                 >
                   Contact Us
@@ -170,7 +194,8 @@ const Header = () => {
                     }`}
                   >
                     {link.name}
-                    <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#C61A1A] transition-all duration-300 ${
+                    <span
+                      className={`absolute -bottom-1 left-0 h-0.5 bg-[#C61A1A] transition-all duration-300 ${
                         link.active ? "w-full" : "w-0 group-hover:w-full"
                       }`}
                     ></span>
@@ -178,9 +203,8 @@ const Header = () => {
                 ))}
               </div>
 
-              <a 
-                href="#contact"
-                onClick={(e) => handleScroll(e, "#contact")}
+              <a
+                 href="https://docs.google.com/forms/d/1_IfXhH2B5eA0NyE4MNl1hbsme-hyZS7NnGkwiWNr_Vc/viewform?edit_requested=true" target="_blank"
                 className="bg-[#C61A1A] hover:bg-[#a51515] text-white px-6 py-3 font-bold text-sm uppercase tracking-wide transition-colors shadow-md hover:shadow-lg"
               >
                 Contact Us
@@ -232,11 +256,11 @@ const Header = () => {
                     {link.name}
                   </a>
                 ))}
-                
+
                 <div className="mt-8 border-t pt-6 flex flex-col gap-4">
-                  <ContactItem icon={MapPin} label="Address" value="252, 2nd Floor, M G Road, Kottakuppam, Vanur, Tamil Nadu 605104" mobile={true} />
-                  <ContactItem icon={Mail} label="Email" value="educonsultants1994@gmail.com" mobile={true} />
-                  <ContactItem icon={Phone} label="Phone Number" value="8015359971" mobile={true} />
+                  {contactInfo.map((info, idx) => (
+                    <ContactItem key={idx} {...info} mobile={true} />
+                  ))}
                 </div>
               </div>
             </motion.div>
@@ -249,16 +273,59 @@ const Header = () => {
   );
 };
 
-const ContactItem = ({ icon: Icon, label, value, mobile }) => (
-  <div className={`flex items-center gap-3 ${mobile ? "text-gray-600" : ""}`}>
-    <div className={`p-2 text-white ${mobile ? "bg-gray-100 text-[#0077C0]" : "bg-[#0077C0]"}`}>
-      <Icon size={mobile ? 18 : 20} className={mobile ? "text-[#0077C0]" : "text-white"} />
+// Updated ContactItem to handle links (href)
+const ContactItem = ({ icon: Icon, label, value, mobile, href }) => {
+  const content = (
+    <div
+      className={`flex items-center gap-3 group ${
+        mobile ? "text-gray-600" : ""
+      }`}
+    >
+      <div
+        className={`p-2 text-white transition-colors duration-300 ${
+          mobile
+            ? "bg-gray-100 text-[#0077C0]"
+            : "bg-[#0077C0] group-hover:bg-[#005fa3]"
+        }`}
+      >
+        <Icon
+          size={mobile ? 18 : 20}
+          className={mobile ? "text-[#0077C0]" : "text-white"}
+        />
+      </div>
+      <div className="flex flex-col">
+        {!mobile && (
+          <span className="text-gray-500 text-xs font-semibold uppercase tracking-wide">
+            {label}
+          </span>
+        )}
+        <span
+          className={`font-medium text-sm ${
+            mobile
+              ? "text-gray-700"
+              : "text-gray-800 group-hover:text-[#C61A1A] transition-colors"
+          }`}
+        >
+          {value}
+        </span>
+      </div>
     </div>
-    <div className="flex flex-col">
-      {!mobile && <span className="text-gray-500 text-sm">{label}</span>}
-      <span className={`font-semibold text-sm ${mobile ? "text-gray-700" : "text-gray-800"}`}>{value}</span>
-    </div>
-  </div>
-);
+  );
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        target={href.startsWith("http") ? "_blank" : "_self"}
+        rel="noopener noreferrer"
+        className="block"
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return content;
+};
 
 export default Header;

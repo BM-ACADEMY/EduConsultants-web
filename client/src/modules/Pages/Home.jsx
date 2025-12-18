@@ -1,16 +1,26 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  User,
   BookOpen,
   Trophy,
-  GraduationCap,
   Users,
   MessageCircle,
   CheckCircle2,
   ArrowRight,
 } from "lucide-react";
 import Banner1 from "@/assets/Banner/banner1.jpg";
+import Avatar1 from "@/assets/avatar/img1.png";
+import Avatar2 from "@/assets/avatar/img2.png";
+import Avatar3 from "@/assets/avatar/img3.png";
+import Avatar4 from "@/assets/avatar/img4.png";
+
+// --- AI Generated Indian Avatar Data URIs (Embedded directly to avoid external links) ---
+const generatedIndianAvatars = [
+  Avatar1,
+  Avatar2,
+  Avatar3,
+  Avatar4
+];
 
 const Homepage = () => {
   // Animation variants
@@ -27,16 +37,20 @@ const Homepage = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
-  // Pencil underline animation
+  // Pencil underline animation - UPDATED FOR LOOPING
   const pathVariants = {
     hidden: { pathLength: 0, opacity: 0 },
     visible: {
       pathLength: 1,
       opacity: 1,
       transition: {
-        duration: 1.5,
-        ease: "easeInOut",
-        delay: 1,
+        pathLength: {
+          duration: 2, // Slightly longer duration for smoother loop
+          ease: "easeInOut",
+          repeatType: "reverse", // Draws back and forth endlessly
+          repeatDelay: 0.5, // Brief pause before reversing
+        },
+        opacity: { duration: 0.5 }, // Fade in initially
       },
     },
   };
@@ -47,7 +61,7 @@ const Homepage = () => {
       id="home"
     >
       {/* --- HERO SECTION --- */}
-      <div className="relative flex-grow min-h-[650px] lg:min-h-[850px] flex items-center pb-20 md:pb-32">
+      <div className="relative flex-grow min-h-[650px] lg:min-h-[850px] flex items-center pt-16 md:pt-28 pb-20 md:pb-32">
         {/* Background Image & Overlay */}
         <div className="absolute inset-0 z-0">
           <img
@@ -72,7 +86,7 @@ const Homepage = () => {
               className="flex items-center gap-2 mb-4"
             >
               <span className="text-gray-300 text-sm font-medium tracking-wide">
-                Study Abroad & Local Colleges
+                One-on-One Counselling | Clear Guidance | Fast Process
               </span>
             </motion.div>
 
@@ -81,11 +95,9 @@ const Homepage = () => {
               variants={itemVariants}
               className="text-4xl md:text-6xl font-bold text-white leading-tight mb-6"
             >
-              Your Gateway to <br />
-              MBBS in{" "}
-              <span className="relative inline-block z-10">
-                France
-                {/* --- ANIMATED PENCIL MARK --- */}
+              Study <span className="relative inline-block z-10">
+                Abroad
+                {/* --- ANIMATED PENCIL MARK (Now Looping) --- */}
                 <svg
                   className="absolute w-[110%] h-4 -bottom-2 -left-1 text-red-600 -z-10"
                   viewBox="0 0 200 20"
@@ -94,7 +106,7 @@ const Homepage = () => {
                 >
                   <motion.path
                     variants={pathVariants}
-                    d="M2 15C40 5 150 5 198 12"
+                    d="M1 15C40 5 150 5 198 12"
                     stroke="currentColor"
                     strokeWidth="8"
                     strokeLinecap="round"
@@ -102,8 +114,8 @@ const Homepage = () => {
                   />
                 </svg>
                 {/* --------------------------- */}
-              </span>{" "}
-              & Local Admissions
+              </span>{" "} | MBBS | France | Local College Admissions    
+             
             </motion.h1>
 
             {/* Subtext */}
@@ -112,12 +124,11 @@ const Homepage = () => {
               className="text-gray-300 text-lg md:text-xl mb-6 max-w-2xl leading-relaxed"
             >
               <span className="text-white font-semibold">
-                Confused about MBBS or Local Admissions?
-              </span>{" "}
-              <br />
+                Confused about MBBS | France | Local Admissions?
+              </span>{" "} 
+              <br/>
               We guide you from{" "}
-              <span className="text-yellow-400 font-bold">A → Z</span> : Course
-              selection, Fees, Documents, Application & Visa support.
+              <span className="text-yellow-400 font-bold">A → Z</span>
             </motion.p>
 
             {/* Feature Checklist */}
@@ -135,19 +146,23 @@ const Homepage = () => {
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-green-400" />
-                <span>Exclusive Webinars</span>
+                <span>Monthly Webinars</span>
               </div>
             </motion.div>
 
             {/* Buttons */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-wrap gap-4"
-            >
-              <button className="bg-[#D32F2F] hover:bg-red-700 text-white px-8 py-4 font-bold transition-all transform shadow-lg flex items-center gap-2 group">
-                REGISTER NOW
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
+            <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
+             <a
+  href="https://docs.google.com/forms/d/1_IfXhH2B5eA0NyE4MNl1hbsme-hyZS7NnGkwiWNr_Vc/viewform"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <button className="bg-[#D32F2F] hover:bg-red-700 text-white px-8 py-4 font-bold transition-all transform shadow-lg flex items-center gap-2 group">
+    REGISTER NOW
+    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+  </button>
+</a>
+
 
               <a
                 href="https://wa.me/918015359971?text=Hi%2C%20I%20am%20interested%20in%20MBBS%20in%20France%20and%20Local%20College%20Admissions.%20Please%20guide%20me%20about%20course%20selection%2C%20fees%2C%20documents%2C%20application%20and%20visa%20support."
@@ -170,7 +185,7 @@ const Homepage = () => {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} /* <--- UPDATED: This prevents repeating */
+          viewport={{ once: true }}
           transition={{ delay: 0.1, duration: 0.5 }}
           className="bg-[#0A2647] p-10 md:p-14 text-white flex flex-col justify-center min-h-[250px]"
         >
@@ -188,7 +203,7 @@ const Homepage = () => {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} /* <--- UPDATED: This prevents repeating */
+          viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.5 }}
           className="bg-[#0F5699] p-10 md:p-14 text-white flex flex-col justify-center min-h-[250px] md:min-h-[300px]"
         >
@@ -206,34 +221,31 @@ const Homepage = () => {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} /* <--- UPDATED: This prevents repeating */
+          viewport={{ once: true }}
           transition={{ delay: 0.3, duration: 0.5 }}
           className="bg-[#C62828] p-10 md:p-14 text-white flex flex-col justify-center min-h-[250px] md:min-h-[350px] relative overflow-hidden"
         >
           <Trophy className="absolute -right-6 -bottom-6 w-40 h-40 text-white opacity-10" />
 
           <div className="flex flex-col gap-4 relative z-10">
-            {/* --- NEW: Person Image Badge --- */}
+            {/* --- Person Image Badge (UPDATED WITH AI INDIAN AVATARS) --- */}
             <div className="flex items-center -space-x-3 mb-1">
-              {/* Generates 3 circular avatars */}
-              {[1, 2, 3].map((i) => (
+              {generatedIndianAvatars.map((imgSrc, index) => (
                 <div
-                  key={i}
+                  key={index}
                   className="w-10 h-10 rounded-full border-2 border-white bg-gray-300 overflow-hidden"
                 >
                   <img
-                    src={`https://i.pravatar.cc/100?img=${i + 10}`}
-                    alt="Student"
+                    src={imgSrc}
+                    alt={`Student ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
                 </div>
               ))}
-              {/* The Counter Badge */}
               <div className="w-10 h-10 rounded-full border-2 border-white bg-blue-500 flex items-center justify-center text-xs font-bold">
-                2K+
+                100+
               </div>
             </div>
-            {/* ------------------------------- */}
 
             <div className="flex items-center gap-4">
               <Trophy className="w-10 h-10 text-white" />

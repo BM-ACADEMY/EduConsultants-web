@@ -37,7 +37,7 @@ const FAQSection = () => {
           <div className="max-w-2xl">
             <div className="flex items-center gap-3 mb-3">
               <span className="text-[#D32F2F] font-bold text-sm tracking-wider uppercase">
-                Admission & Application
+                Frequently Asked Questions
               </span>
               <div className="h-[2px] w-12 bg-[#D32F2F]"></div>
             </div>

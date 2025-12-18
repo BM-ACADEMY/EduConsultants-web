@@ -1,6 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
-import { GraduationCap, Users, CalendarCheck, ShieldCheck, Globe, Award, BookOpen, Briefcase } from "lucide-react";
+import { 
+  GraduationCap, 
+  Users, 
+  CalendarCheck, 
+  Stethoscope,   // For Doctor/Medical
+  Cpu,           // For Engineering
+  Palette,       // For Arts
+  BookOpen,      // For Education
+  Microscope,    // For Science/Research
+  DraftingCompass // For Architecture/Engineering
+} from "lucide-react";
 import Banner2 from "@/assets/Banner/banner2.png"; // Ensure this path is correct
 
 // --- 1. Reusable Counter Component ---
@@ -47,14 +57,14 @@ const AboutSection = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
-  // --- Data for Logos ---
+  // --- Data for Logos (Updated for Doctor, Engineering, Arts, Education) ---
   const logos = [
-    { icon: <ShieldCheck className="w-8 h-8 text-white" />, text: "Security" },
-    { icon: <Globe className="w-8 h-8 text-white" />, text: "Global" },
-    { icon: <Award className="w-8 h-8 text-white" />, text: "Awarded" },
-    { icon: <BookOpen className="w-8 h-8 text-white" />, text: "Library" },
-    { icon: <Briefcase className="w-8 h-8 text-white" />, text: "Partners" },
-    { icon: <GraduationCap className="w-8 h-8 text-white" />, text: "Alumni" },
+    { icon: <Stethoscope className="w-8 h-8 text-white" />, text: "Medical" },
+    { icon: <Cpu className="w-8 h-8 text-white" />, text: "Engineering" },
+    { icon: <Palette className="w-8 h-8 text-white" />, text: "Creative Arts" },
+    { icon: <BookOpen className="w-8 h-8 text-white" />, text: "Education" },
+    { icon: <Microscope className="w-8 h-8 text-white" />, text: "Science" },
+    { icon: <DraftingCompass className="w-8 h-8 text-white" />, text: "Architecture" },
   ];
 
   // Duplicate the logos array to create a seamless loop effect
@@ -126,9 +136,9 @@ const AboutSection = () => {
               </div>
               <div>
                 <h3 className="text-4xl font-bold text-gray-900 mb-1">
-                  <Counter value={5.4} suffix="k" decimals={1} />
+                  <Counter value={1.2} suffix="k" decimals={1} />
                 </h3>
-                <p className="font-semibold text-gray-800 mb-2">Students Placed</p>
+                <p className="font-semibold text-gray-800 mb-2">Students Guided</p>
               </div>
             </motion.div>
 
@@ -142,7 +152,7 @@ const AboutSection = () => {
               </div>
               <div>
                 <h3 className="text-4xl font-bold text-gray-900 mb-1">
-                  <Counter value={15} suffix=" Years" />
+                  <Counter value={13} suffix=" Years" />
                 </h3>
                 <p className="font-semibold text-gray-800 mb-2">Education Experience</p>
               </div>
@@ -175,12 +185,11 @@ const AboutSection = () => {
           {/* Text Row */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12 border-b border-gray-700/50 pb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white max-w-lg leading-tight">
-              Trusted by <Counter value={100} suffix="K+" /> <br className="hidden md:block"/>
-              Educational Institutions
+              Trusted by <Counter value={100} suffix="+" /> <br className="hidden md:block"/>
+              Top Institutions
             </h2>
             <p className="text-gray-400 text-base md:text-lg max-w-xl leading-relaxed">
-              We partner with prestigious universities and schools worldwide to ensure
-              our students get the best possible guidance.
+              We partner with prestigious universities in Medical, Engineering, and Arts fields to ensure you get the best guidance.
             </p>
           </div>
 

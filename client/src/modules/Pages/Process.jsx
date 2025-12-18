@@ -2,33 +2,36 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FileText, MessageCircle, Rocket, ArrowRight } from "lucide-react";
 
+// Google Form Link from previous request
+const REGISTRATION_LINK = "https://docs.google.com/forms/d/1_IfXhH2B5eA0NyE4MNl1hbsme-hyZS7NnGkwiWNr_Vc/viewform?edit_requested=true";
+
 const steps = [
   {
     id: 1,
     title: "Register",
     subtitle: "Universal Lead Form",
-    description:
-      "Fill our 2-minute form. Your details are securely sent to our Leads_Master system instantly.",
+    description: "Fill our 2-minute form. Your details are securely sent to our Leads_Master system instantly.",
     icon: FileText,
     color: "blue",
+    link: REGISTRATION_LINK, // Linked to form
   },
   {
     id: 2,
     title: "We Contact You",
     subtitle: "WhatsApp Connect",
-    description:
-      "Within 24–48 hours, you receive a personalized counselling call and WhatsApp introduction.",
+    description: "Within 24–48 hours, you receive a personalized counselling call and WhatsApp introduction.",
     icon: MessageCircle,
     color: "red",
+    link: "#contact", // Placeholder: Scrolling to contact section or WhatsApp link
   },
   {
     id: 3,
     title: "Start Application",
     subtitle: "Track & Launch",
-    description:
-      "We generate your unique Application ID. You get real-time status updates via WhatsApp.",
+    description: "We generate your unique Application ID. You get real-time status updates via WhatsApp.",
     icon: Rocket,
     color: "blue",
+    link: REGISTRATION_LINK, // Usually leads back to portal or form
   },
 ];
 
@@ -37,7 +40,6 @@ const ProcessSection = () => {
     <section className="py-20 bg-white overflow-hidden relative" id="ourprocess">
       {/* ==================== EDUCATION VECTOR BACKGROUND ==================== */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.07]">
-        {/* Using a pattern pattern for education icons */}
         <svg className="w-full h-full text-slate-900" width="100%" height="100%">
           <pattern
             id="education-pattern"
@@ -88,7 +90,7 @@ const ProcessSection = () => {
         </svg>
       </div>
 
-      {/* Main Content - Added z-10 to sit above the map */}
+      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
           <motion.div
@@ -137,12 +139,15 @@ const StepCard = ({ step, index }) => {
   const isRed = step.color === "red";
 
   return (
-    <motion.div
+    <motion.a
+      href={step.link}
+      target={step.link.startsWith("http") ? "_blank" : "_self"}
+      rel="noopener noreferrer"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.5, delay: index * 0.2 }}
-      className="relative h-full group"
+      className="relative h-full group block cursor-pointer"
     >
       {/* CARD STYLE */}
       <div
@@ -192,9 +197,9 @@ const StepCard = ({ step, index }) => {
           </p>
 
           {/* Action Arrow */}
-          <div className="flex items-center text-white font-semibold group/arrow cursor-pointer">
+          <div className="flex items-center text-white font-semibold group/arrow">
             <span className="mr-2 border-b border-transparent group-hover/arrow:border-white transition-colors">
-              Learn more
+              {step.id === 1 ? "Fill Form" : "Learn more"}
             </span>
             <motion.div
               whileHover={{ x: 5 }}
@@ -205,7 +210,7 @@ const StepCard = ({ step, index }) => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </motion.a>
   );
 };
 

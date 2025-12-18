@@ -67,13 +67,17 @@ const ChooseUsSection = () => {
               ))}
             </motion.div>
 
-            <motion.button 
-              variants={itemVariants}
-              whileTap={{ scale: 0.95 }}
-              className="bg-[#D32F2F] text-white font-bold py-4 px-8 shadow-lg hover:bg-[#a51515] transition-colors w-fit"
-            >
-              LEARN MORE
-            </motion.button>
+            <motion.a
+  href="https://docs.google.com/forms/d/1_IfXhH2B5eA0NyE4MNl1hbsme-hyZS7NnGkwiWNr_Vc/viewform"
+  target="_blank"
+  rel="noopener noreferrer"
+  variants={itemVariants}
+  whileTap={{ scale: 0.95 }}
+  className="bg-[#D32F2F] text-white font-bold py-4 px-8 shadow-lg hover:bg-[#a51515] transition-colors w-fit inline-block"
+>
+  LEARN MORE
+</motion.a>
+
           </motion.div>
 
           {/* Right Side: Staggered Cards */}

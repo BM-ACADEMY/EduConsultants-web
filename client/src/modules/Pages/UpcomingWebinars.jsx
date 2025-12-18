@@ -3,7 +3,9 @@ import { motion } from 'framer-motion';
 import { Calendar, Mic, GraduationCap, MapPin, ArrowRight } from 'lucide-react';
 
 const UpcomingWebinars = () => {
-  // Data derived from your request
+  // Common Google Form URL
+  const REGISTRATION_LINK = "https://docs.google.com/forms/d/1_IfXhH2B5eA0NyE4MNl1hbsme-hyZS7NnGkwiWNr_Vc/viewform?edit_requested=true";
+
   const webinars = [
     {
       id: 1,
@@ -11,8 +13,9 @@ const UpcomingWebinars = () => {
       title: "MBBS Abroad – Kyrgyzstan & Georgia",
       date: "Dec 21st, 2025",
       desc: "Program Overview + Budget + Documents + Seat Availability",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800", // Medical/Lab image
+      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800",
       icon: <Mic className="w-5 h-5" />,
+      link: REGISTRATION_LINK
     },
     {
       id: 2,
@@ -20,8 +23,9 @@ const UpcomingWebinars = () => {
       title: "Study in France – UG/PG Info Session",
       date: "Updated Monthly",
       desc: "Campus France Process + Fees + Scholarships",
-      image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=800", // Eiffel Tower/France image
+      image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=800",
       icon: <GraduationCap className="w-5 h-5" />,
+      link: REGISTRATION_LINK
     },
     {
       id: 3,
@@ -29,8 +33,9 @@ const UpcomingWebinars = () => {
       title: "Local College Admission Guidance (Pondy/TN)",
       date: "Every Week",
       desc: "Register through the Universal Google Form. Options match your Q13.",
-      image: "https://www.iconsofindianbusiness.com/private/files/Pondy_dor.jpg", // Classroom/College image
+      image: "https://www.iconsofindianbusiness.com/private/files/Pondy_dor.jpg",
       icon: <MapPin className="w-5 h-5" />,
+      link: REGISTRATION_LINK
     }
   ];
 
@@ -95,10 +100,18 @@ const UpcomingWebinars = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {webinars.map((item) => (
-            <motion.div 
-              key={item.id} 
+            /* UPDATED: 
+               1. Changed from motion.div to motion.a
+               2. Added href, target, and rel attributes
+               3. Added 'block' to className to ensure the link covers the card area
+            */
+            <motion.a 
+              key={item.id}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
               variants={cardVariants}
-              className="group relative h-[450px] rounded-2xl overflow-hidden shadow-lg cursor-pointer"
+              className="group relative h-[450px] block rounded-2xl overflow-hidden shadow-lg cursor-pointer"
             >
               {/* Background Image with Zoom Effect */}
               <div className="absolute inset-0 w-full h-full overflow-hidden">
@@ -109,7 +122,7 @@ const UpcomingWebinars = () => {
                 />
               </div>
 
-              {/* Gradient Overlay (Matching the reference design) */}
+              {/* Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-blue-900/95 via-blue-900/60 to-transparent opacity-90 transition-opacity duration-300" />
 
               {/* Content Positioned at Bottom */}
@@ -144,7 +157,7 @@ const UpcomingWebinars = () => {
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </div>
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </motion.div>
       </div>
