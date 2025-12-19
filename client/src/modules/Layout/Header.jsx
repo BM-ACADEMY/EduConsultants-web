@@ -6,7 +6,7 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import { MapPin, Mail, Phone, Menu, X } from "lucide-react";
-import Logo from "@/assets/logo/logo.png";
+import Logo from "@/assets/logo/edu.png";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -119,7 +119,7 @@ const Header = () => {
               <img
                 src={Logo}
                 alt="Universite Logo"
-                className="h-12 w-auto object-contain"
+                className="h-15 w-auto object-contain"
               />
             </a>
 
@@ -178,7 +178,7 @@ const Header = () => {
                   className="overflow-hidden flex items-center gap-2"
                 >
                   <a href="#home" onClick={(e) => handleScroll(e, "#home")}>
-                    <img src={Logo} alt="Logo" className="h-8 w-auto" />
+                    <img src={Logo} alt="Logo" className="h-14 w-auto" />
                   </a>
                 </motion.div>
 

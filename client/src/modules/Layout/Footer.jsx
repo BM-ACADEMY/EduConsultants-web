@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 // Ensure you have your logo file in the correct path
-import logo from "@/assets/logo/logo.png";
+import logo from "@/assets/logo/edu.png";
 
 const Footer = () => {
   // Get the current year automatically
@@ -89,7 +89,7 @@ const Footer = () => {
           <motion.div variants={itemVariants} className="space-y-6">
             <div className="flex items-center gap-2">
               <a href="#home" onClick={(e) => handleScroll(e, "#home")}>
-                <img src={logo} alt="Universite Logo" className="h-10 w-auto" />
+                <img src={logo} alt="Universite Logo" className="h-20 w-auto" />
               </a>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed max-w-sm">
