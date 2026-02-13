@@ -1,36 +1,40 @@
-import React from 'react'
-import Header from './modules/Layout/Header'
-import Homepage from './modules/Pages/Home'
-import AboutSection from './modules/Pages/AboutSection'
-import ChooseUsSection from './modules/Pages/ChooseUsSection'
-import UpcomingWebinars from './modules/Pages/UpcomingWebinars'
-import WhatWeHelpWith from './modules/Pages/WhatWeHelpWith'
-import TrendingSection from './modules/Pages/TrendingSection';
-import ProcessSection from './modules/Pages/Process'
-import TestimonialSection from './modules/Pages/TestimonialSection'
-import PopularPrograms from './modules/Pages/PopularPrograms'
-import FAQSection from './modules/Pages/FAQSection'
-import Footer from './modules/Layout/Footer'
-import WhatsAppBtn from './modules/Pages/Whatsapp'
+import Banner from "./components/banner";
+import LenisScroll from "./components/lenis-scroll";
+import Navbar from "./components/navbar";
+import Footer from "./components/footer";
+import HeroSection from "./sections/hero-section";
+import HowItWorksSection from "./sections/how-it-works-section";
+import MeetOurTeamSection from "./sections/meet-our-team-section";
+import OurTestimonialsSection from "./sections/our-testimonials-section";
+import OurPricingSection from "./sections/our-pricing-section";
+import FaqSection from "./sections/faq-section";
+import CallToActionSection from "./sections/call-to-action-section";
+import TrendingContentSection from "./sections/TrendingContentSection";
+import ProcessSection from "./sections/ProcessSection";
+import PopularProgramsSection from "./sections/PopularProgramsSection";
+import AboutContactSection from "./sections/AboutContactSection";
+import FloatingWhatsAppButton from "./sections/FloatingWhatsAppButton";
 
-const App = () => {
-  return (
-    <div>
-      <Header/>
-      <Homepage/>
-      <ChooseUsSection/>
-      <UpcomingWebinars/>
-      <WhatWeHelpWith/>
-      <TrendingSection/>
-      <ProcessSection/>
-      <PopularPrograms/>
-      <FAQSection/>
-      <AboutSection/>
-      <TestimonialSection/>
-      <WhatsAppBtn/>
-      <Footer/>
-    </div>
-  )
+export default function App() {
+    return (
+        <>
+            <LenisScroll />
+            {/* <Banner /> */}
+            <Navbar />
+            <main className='px-4'>
+                <HeroSection />
+                <HowItWorksSection />
+                <MeetOurTeamSection />
+                <OurTestimonialsSection />
+                <OurPricingSection />
+                <ProcessSection />
+                <PopularProgramsSection />
+                <FaqSection />
+                <AboutContactSection />
+                <FloatingWhatsAppButton />
+                {/* <CallToActionSection /> */}
+            </main>
+            <Footer />
+        </>
+    );
 }
-
-export default App
